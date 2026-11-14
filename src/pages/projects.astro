@@ -1,0 +1,77 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { projects } from '../data/projects';
+
+const stacks = Array.from(new Set(projects.flatMap((p) => p.stack)));
+---
+
+<BaseLayout title="Projetos — Anderson" description="Projetos de frontend e full stack do Anderson.">
+	<section class="space-y-6">
+		<div class="space-y-2">
+			<h1 class="text-3xl md:text-4xl">Projetos</h1>
+			<div class="sig" aria-hidden="true"></div>
+			<p class="text-muted">Alguns trabalhos recentes.</p>
+		</div>
+
+		<nav class="flex flex-wrap gap-4 text-sm" aria-label="Filtros">
+			<button type="button" data-filter="all" class="filter-btn transition hover:opacity-70" aria-pressed="true">Todos</button>
+			{stacks.map((stack) => (
+				<button type="button" data-filter={stack.toLowerCase()} class="filter-btn transition hover:opacity-70" aria-pressed="false">
+					{stack}
+				</button>
+			))}
+		</nav>
+
+		<div class="divide-y divide-border">
+			{projects.map((project) => (
+				<a
+					href={`/project/${project.slug}`}
+					class="group grid gap-4 py-5 md:grid-cols-[160px_1fr] md:items-center"
+					data-stack={project.stack.map((s) => s.toLowerCase()).join(',')}
+				>
+					<div class="aspect-video w-full overflow-hidden rounded-md border border-transparent bg-foreground/5 transition group-hover:border-accent md:aspect-auto md:h-32">
+						<img
+							src={project.cover}
+							alt={project.title}
+							loading="lazy"
+							decoding="async"
+							class="h-full w-full object-cover transition duration-300 group-hover:scale-105"
+						/>
+					</div>
+					<div class="flex items-center justify-between gap-2">
+						<div class="space-y-0.5">
+							<h2 class="font-display text-xl text-foreground transition group-hover:text-accent">{project.title}</h2>
+							<p class="text-sm text-muted">{project.summary}</p>
+							<p class="text-xs text-muted">{project.stack.join(' · ')}</p>
+						</div>
+						<span aria-hidden="true" class="translate-x-0 text-muted transition group-hover:translate-x-1 group-hover:text-accent">→</span>
+					</div>
+				</a>
+			))}
+		</div>
+	</section>
+</BaseLayout>
+
+<script>
+	const buttons = document.querySelectorAll('[data-filter]');
+	const cards = document.querySelectorAll('[data-stack]');
+
+	buttons.forEach((button) => {
+		button.addEventListener('click', () => {
+			const filter = button.getAttribute('data-filter') || 'all';
+
+			buttons.forEach((btn) => {
+				const active = btn === button;
+				btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+				btn.classList.toggle('text-accent', active);
+				btn.classList.toggle('font-medium', active);
+			});
+
+			cards.forEach((card) => {
+				const stacks = card.getAttribute('data-stack')?.split(',') || [];
+				const matches = filter === 'all' || stacks.includes(filter);
+				card.style.display = matches ? '' : 'none';
+			});
+		});
+	});
+</script>

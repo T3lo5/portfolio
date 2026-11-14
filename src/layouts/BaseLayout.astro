@@ -1,0 +1,112 @@
+---
+import '../styles/global.css';
+import ClientRouter from 'astro/components/ClientRouter.astro';
+import ThemeToggle from '../components/ThemeToggle.astro';
+import TabBar from '../components/TabBar.astro';
+
+interface Props {
+	title?: string;
+	description?: string;
+}
+
+const { title = 'Portfolio', description = 'Portfólio de projetos e experiência.' } = Astro.props;
+---
+
+<html lang="pt-BR">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+		<meta name="description" content={description} />
+		<meta name="theme-color" media="(prefers-color-scheme: light)" content="#fafaf9" />
+		<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0c0a09" />
+		<link rel="canonical" href={Astro.url} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content={Astro.url} />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+	<script is:inline>
+			(() => {
+				const root = document.documentElement;
+				const apply = (dark) => {
+					root.classList.toggle('dark', dark);
+					localStorage.setItem('theme', dark ? 'dark' : 'light');
+				};
+
+				const init = () => {
+					const stored = localStorage.getItem('theme');
+					if (stored === 'dark' || (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+						root.classList.add('dark');
+					} else if (stored === 'light') {
+						root.classList.remove('dark');
+					}
+				};
+				init();
+
+				const onThemeToggleClick = (e) => {
+					if (e.target.closest('#theme-toggle')) {
+						const next = !root.classList.contains('dark');
+						apply(next);
+					}
+				};
+
+				const setup = () => {
+					init();
+					document.removeEventListener('click', onThemeToggleClick);
+					document.addEventListener('click', onThemeToggleClick);
+				};
+
+				document.addEventListener('astro:page-load', setup);
+				setup();
+			})();
+		</script>
+	</head>
+	<body class="min-h-screen bg-background text-foreground antialiased">
+		<a href="#main" class="sr-only focus:not-sr-only fixed top-2 left-2 z-[60] rounded-xs bg-accent px-3 py-1.5 text-xs font-medium text-background">Pular para o conteúdo principal</a>
+		<div id="scroll-progress" class="scroll-progress" aria-hidden="true"></div>
+		<header class="sticky top-0 z-50 border-b border-border bg-background">
+			<div class="mx-auto max-w-6xl px-4 py-3 flex items-end justify-between">
+				<a href="/" class="flex items-center gap-2 font-display text-lg">
+					<span class="h-2 w-2 bg-accent" aria-hidden="true"></span>
+					Anderson
+				</a>
+				<TabBar current={Astro.url.pathname} class="flex-1" />
+				<div class="flex items-center gap-2">
+					<ThemeToggle />
+				</div>
+			</div>
+		</header>
+		<main id="main" class="mx-auto max-w-6xl px-4 py-8">
+			<slot />
+		</main>
+		<ClientRouter fallback="animate" />
+		<footer class="border-t border-border/60">
+			<div class="mx-auto max-w-6xl px-4 py-8 flex flex-col gap-4 text-sm text-muted md:flex-row md:items-center md:justify-between">
+				<p>© {new Date().getFullYear()} Anderson. Todos os direitos reservados.</p>
+				<div class="flex gap-4">
+					<a href="/" class="transition hover:opacity-70">Início</a>
+					<a href="/projects" class="transition hover:opacity-70">Projetos</a>
+					<a href="/contact" class="transition hover:opacity-70">Contato</a>
+				</div>
+			</div>
+		</footer>
+		<script>
+			const bar = document.getElementById('scroll-progress');
+			if (bar) {
+				const update = () => {
+					const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+					const ratio = Math.max(0, Math.min(1, (window.scrollY || 0) / (scrollHeight || 1)));
+					bar.style.transform = `scaleX(${ratio})`;
+				};
+				update();
+				window.addEventListener('scroll', update, { passive: true });
+			}
+		</script>
+	</body>
+</html>

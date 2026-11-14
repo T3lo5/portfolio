@@ -1,0 +1,135 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import { social } from '../data/social';
+import { site } from '../data/site';
+
+const hasEndpoint = Boolean(site.formspreeFormId);
+const formAction = hasEndpoint
+	? `https://formspree.io/f/${site.formspreeFormId}`
+	: `mailto:${site.email}`;
+const formEncoding = hasEndpoint ? 'application/x-www-form-urlencoded' : 'text/plain';
+---
+
+<BaseLayout 
+	title="Contato — Anderson"
+	description="Fale com o Anderson sobre projetos, parcerias ou oportunidades."
+>
+	<section class="grid gap-8 md:grid-cols-2 md:items-start">
+		<div class="space-y-4">
+			<h1 class="text-3xl md:text-4xl">Contato</h1>
+			<div class="sig" aria-hidden="true"></div>
+			<p class="text-muted">
+				Se quiser conversar sobre projetos, parcerias ou oportunidades, me envie uma mensagem ou
+				usa um dos canais abaixo. Respondo o mais rápido possível.
+			</p>
+			<ul class="space-y-2 text-sm">
+				{social.map((link) => (
+					<li class="flex items-center gap-2.5">
+						<span class="text-accent" aria-hidden="true"><Icon name={link.icon} /></span>
+						<a
+							href={link.href}
+							class="text-muted transition hover:text-accent"
+							{...(link.icon === 'email' || link.icon === 'phone'
+								? {}
+								: { target: '_blank', rel: 'noreferrer' })}
+						>
+							{link.label}
+						</a>
+					</li>
+				))}
+			</ul>
+			<p class="text-xs text-muted">
+				Prefere email? <a href={`mailto:${site.email}`} class="text-accent underline">andersonwsf@gmail.com</a>
+			</p>
+		</div>
+		<form
+			class="space-y-4 rounded-md border border-border bg-surface p-6"
+			method="POST"
+			action={formAction}
+			enctype={formEncoding}
+			aria-label="Formulário de contato"
+			data-formspree-id={site.formspreeFormId}
+			data-mailto={`mailto:${site.email}`}
+		>
+			<div id="form-status" role="status" aria-live="polite" class="hidden text-sm"></div>
+			<div class="grid gap-4 sm:grid-cols-2">
+				<div class="space-y-1">
+					<label class="text-sm font-medium" for="name">Nome</label>
+					<input id="name" name="name" required class="w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-accent" />
+				</div>
+				<div class="space-y-1">
+					<label class="text-sm font-medium" for="email">Email</label>
+					<input id="email" name="email" type="email" required class="w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-accent" />
+				</div>
+			</div>
+			<div class="space-y-1">
+				<label class="text-sm font-medium" for="message">Mensagem</label>
+				<textarea id="message" name="message" rows="5" required class="w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-accent"></textarea>
+			</div>
+			<button type="submit" class="rounded-md bg-accent px-4 py-2 text-sm font-medium text-background transition hover:opacity-90">
+				Enviar
+			</button>
+			{!hasEndpoint && (
+				<p class="text-xs text-muted">
+					Sem servidor: o envio abre seu aplicativo de email com a mensagem já preenchida.
+				</p>
+			)}
+		</form>
+	</section>
+	<script>
+		const form = document.querySelector('form[aria-label="Formulário de contato"]');
+		const status = document.getElementById('form-status');
+
+		if (form && status) {
+			const formspreeId = form.dataset.formspreeId;
+			const mailto = form.dataset.mailto || '';
+
+			const show = (message, ok = false) => {
+				status.classList.remove('hidden');
+				status.classList.toggle('text-accent', ok);
+				status.textContent = message;
+			};
+
+			form.addEventListener('submit', async (event) => {
+				event.preventDefault();
+
+				if (formspreeId) {
+					show('Enviando...');
+					try {
+						const response = await fetch(`https://formspree.io/f/${formspreeId}`, {
+							method: 'POST',
+							body: new FormData(form),
+							headers: { Accept: 'application/json' },
+						});
+						if (response.ok) {
+							show('Obrigado! Sua mensagem foi enviada. Retornarei em breve.', true);
+							form.reset();
+							form.classList.add('hidden');
+						} else {
+							const data = await response.json().catch(() => ({}));
+							show(data.error || 'Erro ao enviar. Tente novamente.');
+						}
+					} catch {
+						show('Erro ao enviar. Tente novamente.');
+					}
+					return;
+				}
+
+				// Sem endpoint configurado: abre o cliente de email com os campos preenchidos.
+				const data = new FormData(form);
+				const name = String(data.get('name') ?? '').trim();
+				const email = String(data.get('email') ?? '').trim();
+				const message = String(data.get('message') ?? '').trim();
+				const subject = name ? `Contato pelo portfólio — ${name}` : 'Contato pelo portfólio';
+				const body = `Nome: ${name}\nEmail: ${email}\n\n${message}`;
+
+				window.location.href = `${mailto}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+				show(
+					`Abrindo seu aplicativo de email com a mensagem preenchida. Se nada acontecer, escreva direto para ${mailto.replace('mailto:', '')}.`,
+					true,
+				);
+			});
+		}
+	</script>
+</BaseLayout>

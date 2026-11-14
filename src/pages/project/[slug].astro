@@ -1,0 +1,70 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { projects } from '../../data/projects';
+
+export async function getStaticPaths() {
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+---
+
+<BaseLayout title={`${project.title} — Anderson`} description={project.summary}>
+  <section class="space-y-6">
+    <div class="space-y-3">
+      <p class="text-xs font-medium uppercase tracking-widest text-accent">{project.role}</p>
+      <h1 class="text-3xl md:text-4xl">{project.title}</h1>
+      <div class="sig" aria-hidden="true"></div>
+      <p class="text-xs text-muted">{project.period}</p>
+      <p class="text-muted">{project.summary}</p>
+    </div>
+
+    <div class="aspect-video w-full overflow-hidden rounded-md border border-border/60 bg-foreground/5 dark:bg-foreground/10">
+      <img
+        src={project.cover}
+        alt={project.title}
+        decoding="async"
+        class="h-full w-full object-cover"
+      />
+    </div>
+
+    <div class="max-w-2xl space-y-4 text-muted">
+      {project.problem && (
+        <>
+          <p><span class="font-medium text-foreground">Problema.</span> {project.problem}</p>
+          <p>{project.description}</p>
+        </>
+      )}
+      {!project.problem && <p>{project.description}</p>}
+      {project.outcome && <p><span class="font-medium text-foreground">Outcome.</span> {project.outcome}</p>}
+    </div>
+
+    <p class="text-sm text-muted">{project.stack.join(' · ')}</p>
+
+    <div class="flex gap-3">
+      {project.link && (
+        <a
+          href={project.link}
+          target="_blank"
+          rel="noreferrer"
+            class="rounded-md bg-accent px-4 py-2 text-sm font-medium text-background transition hover:opacity-90"
+        >
+          Ver site
+        </a>
+      )}
+      {project.repo && (
+        <a
+          href={project.repo}
+          target="_blank"
+          rel="noreferrer"
+            class="rounded-md border border-border px-4 py-2 text-sm font-medium transition hover:bg-surface"
+        >
+          Repositório
+        </a>
+      )}
+    </div>
+  </section>
+</BaseLayout>

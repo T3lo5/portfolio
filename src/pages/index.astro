@@ -1,0 +1,29 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../data/site';
+---
+
+<BaseLayout 
+	title={`${site.name} — ${site.role}`}
+	description={site.description}
+>
+	<section class="grid gap-8 md:grid-cols-1 md:items-center">
+		<div class="space-y-6 max-w-2xl">
+		<h1 class="text-4xl md:text-5xl">
+			Olá, eu sou o <span class="text-accent">{site.name.split(' ')[0]}</span>
+		</h1>
+		<div class="sig" aria-hidden="true"></div>
+			<p class="text-lg text-muted md:text-xl">
+				{site.description}
+			</p>
+			<div class="flex flex-wrap gap-3">
+			<a href="/projects" class="rounded-md bg-accent px-5 py-2.5 text-sm font-medium text-background transition hover:opacity-90">
+				Ver projetos
+			</a>
+			<a href="/contact" class="rounded-md border border-border px-5 py-2.5 text-sm font-medium transition hover:bg-surface">
+				Contato
+			</a>
+			</div>
+		</div>
+	</section>
+</BaseLayout>

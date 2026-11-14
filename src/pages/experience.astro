@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { experience } from '../data/experience';
+---
+
+<BaseLayout 
+	title="Experiência — Anderson"
+	description="Trajetória profissional do Anderson como desenvolvedor full stack."
+>
+	<section class="space-y-6">
+		<h1 class="text-3xl md:text-4xl">Experiência</h1>
+		<div class="sig" aria-hidden="true"></div>
+		<div class="max-w-2xl space-y-8">
+			{experience.map((job) => (
+				<div class="grid gap-1">
+					<h2 class="font-display text-xl">{job.role}</h2>
+					<p class="text-xs font-medium uppercase tracking-widest text-accent">{job.company}</p>
+					<p class="text-xs text-muted">{job.location} • {job.period}</p>
+					<ul class="mt-2 list-disc space-y-1 pl-5 text-sm text-muted">
+						{job.bullets.map((b) => <li>{b}</li>)}
+					</ul>
+					<p class="text-xs text-muted">{job.stack.join(' · ')}</p>
+				</div>
+			))}
+		</div>
+	</section>
+</BaseLayout>

@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { skills, inlineSkills } from '../data/skills';
+import { site } from '../data/site';
+---
+
+<BaseLayout 
+	title="Sobre mim — Anderson"
+	description="Conheça a trajetória e o foco profissional do Anderson como desenvolvedor full stack."
+>
+	<section class="space-y-6">
+		<div class="space-y-2 max-w-2xl">
+			<h1 class="text-3xl md:text-4xl">Sobre mim</h1>
+			<div class="sig" aria-hidden="true"></div>
+			<p class="text-muted">
+				Desenvolvedor full stack e estudante de Engenharia de Software, apaixonado por criar soluções web
+				eficientes, escaláveis e com ótima experiência para o usuário.
+			</p>
+			<p class="text-muted">
+				Atuo desde o levantamento de requisitos até a entrega final, unindo interfaces modernas e lógicas de
+				negócio robustas. Maior atuação em frontend, com foco em performance, acessibilidade e design system.
+			</p>
+		</div>
+
+		<div class="max-w-2xl space-y-4">
+			<h2 class="text-xl">Tecnologias</h2>
+			{skills.map((group) => (
+				<p class="text-sm text-muted">
+					<span class="font-medium text-foreground">{group.category}:</span> {inlineSkills(group.items)}
+				</p>
+			))}
+		</div>
+
+		<div class="pt-2">
+			<a href="/projects" class="rounded-md bg-accent px-4 py-2 text-sm font-medium text-background transition hover:opacity-90">
+				Ver projetos
+			</a>
+		</div>
+	</section>
+</BaseLayout>

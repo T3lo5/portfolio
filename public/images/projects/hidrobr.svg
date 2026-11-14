@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 270" role="img" aria-label="Plataforma de Monitoramento Hídrico">
+	<rect width="480" height="270" fill="#0a0a0a"/>
+	<rect x="40" y="50" width="400" height="170" rx="6" fill="#1c1917" stroke="#15803d" stroke-width="2"/>
+	<rect x="70" y="80" width="90" height="22" fill="#15803d"/>
+	<rect x="70" y="112" width="200" height="12" fill="#737373"/>
+	<rect x="70" y="134" width="160" height="12" fill="#737373"/>
+	<rect x="70" y="160" width="300" height="60" fill="#fafaf9" opacity=".06"/>
+	<text x="440" y="240" text-anchor="end" font-family="ui-monospace,SFMono,Consolas,monospace" font-size="16" fill="#4ade80">HidroBR</text>
+</svg>
