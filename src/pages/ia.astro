@@ -1,0 +1,80 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { certifications } from '../data/certifications';
+
+const llmNotesUrl = 'https://t3lo5.github.io/llm-notes/';
+
+const notes = [
+	{ label: 'fichas de conceito', count: 45 },
+	{ label: 'guias em prosa', count: 29 },
+	{ label: 'pesquisas', count: 11 },
+	{ label: 'labs com código', count: 9 },
+	{ label: 'fichas de paper', count: 7 },
+	{ label: 'questões de revisão', count: 76 },
+];
+
+const aiCerts = certifications.filter((cert) => /IA|Assistente/i.test(cert.name));
+---
+
+<BaseLayout
+	title="Pós em IA — Anderson"
+	description="Pós-graduação em Desenvolvimento e Gestão de Sistemas de IA e as notas de estudo públicas do Anderson."
+>
+	<section class="space-y-8">
+		<div class="space-y-2 max-w-2xl">
+			<h1 class="text-3xl md:text-4xl">Pós em IA</h1>
+			<div class="sig" aria-hidden="true"></div>
+			<p class="text-muted">
+				Cursando o <span class="font-medium text-foreground">Master em Desenvolvimento e Gestão de Sistemas
+				de IA</span> na ESIC Business &amp; Marketing School (Out/2026 – Out/2027), depois de me formar em
+				Engenharia de Software.
+			</p>
+			<p class="text-muted">
+				O foco não é tratar IA como caixa-preta: é entender o suficiente para integrá-la a sistemas reais —
+				escolher provedor, controlar custo, validar o que o modelo devolve e saber quando não usar.
+			</p>
+		</div>
+
+		<div class="max-w-2xl space-y-4">
+			<h2 class="text-xl">Notas de estudo abertas</h2>
+			<p class="text-muted">
+				Mantenho um vault no Obsidian com o que estudo e publico parte dele como site estático. O vault é a
+				fonte da verdade; o site é uma projeção limitada ao que é publicável, gerada por um exportador que
+				remove vocabulário e caminhos privados antes de publicar.
+			</p>
+			<ul class="space-y-1 text-sm text-muted">
+				{notes.map((note) => (
+					<li><span class="font-medium text-foreground">{note.count}</span> {note.label}</li>
+				))}
+			</ul>
+			<div class="pt-2">
+				<a
+					href={llmNotesUrl}
+					target="_blank"
+					rel="noreferrer"
+					class="rounded-md bg-accent px-4 py-2 text-sm font-medium text-background transition hover:opacity-90"
+				>
+					Abrir as notas
+				</a>
+			</div>
+		</div>
+
+		<div class="max-w-2xl space-y-4">
+			<h2 class="text-xl">Certificações em IA</h2>
+			<ul class="space-y-1 text-sm text-muted">
+				{aiCerts.map((cert) => <li>{cert.name}</li>)}
+			</ul>
+		</div>
+
+		<div class="max-w-2xl space-y-4">
+			<h2 class="text-xl">Onde isso aparece nos projetos</h2>
+			<p class="text-sm text-muted">
+				O <a href="/project/job-radar" class="text-accent underline">Job Radar</a> otimiza currículo com IA sem
+				inventar dados, com verificação por código. O <a href="/project/rss-news-hub" class="text-accent underline">RSS
+				News Hub</a> pontua notícias e tem fallback automático entre provedores. O
+				<a href="/project/gym-program" class="text-accent underline">Treinos</a> gera planos sob demanda com
+				fallback local para funcionar offline.
+			</p>
+		</div>
+	</section>
+</BaseLayout>

@@ -52,7 +52,7 @@ const { project } = Astro.props;
           rel="noreferrer"
             class="rounded-md bg-accent px-4 py-2 text-sm font-medium text-background transition hover:opacity-90"
         >
-          Ver site
+          {project.linkLabel ?? 'Ver site'}
         </a>
       )}
       {project.repo && (

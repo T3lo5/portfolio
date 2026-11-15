@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 270" role="img" aria-label="RSS News Hub">
+	<rect width="480" height="270" fill="#0a0a0a"/>
+	<rect x="40" y="50" width="400" height="170" rx="6" fill="#1c1917" stroke="#15803d" stroke-width="2"/>
+	<circle cx="110" cy="185" r="7" fill="#4ade80"/>
+	<path d="M103 155 a30 30 0 0 1 30 30" fill="none" stroke="#15803d" stroke-width="4" stroke-linecap="round"/>
+	<path d="M103 130 a55 55 0 0 1 55 55" fill="none" stroke="#15803d" stroke-width="4" stroke-linecap="round" opacity=".7"/>
+	<path d="M103 105 a80 80 0 0 1 80 80" fill="none" stroke="#15803d" stroke-width="4" stroke-linecap="round" opacity=".45"/>
+	<path d="M240 108 L410 132 L240 158 L264 133 Z" fill="#15803d"/>
+	<path d="M264 133 L410 132" stroke="#0a0a0a" stroke-width="2"/>
+	<rect x="240" y="178" width="130" height="8" fill="#737373" opacity=".7"/>
+	<text x="440" y="240" text-anchor="end" font-family="ui-monospace,SFMono,Consolas,monospace" font-size="16" fill="#4ade80">rss-news-hub</text>
+</svg>

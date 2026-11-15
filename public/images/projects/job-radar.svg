@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 270" role="img" aria-label="Job Radar">
+	<rect width="480" height="270" fill="#0a0a0a"/>
+	<rect x="40" y="50" width="400" height="170" rx="6" fill="#1c1917" stroke="#15803d" stroke-width="2"/>
+	<circle cx="140" cy="135" r="52" fill="none" stroke="#15803d" stroke-width="1.5" opacity=".55"/>
+	<circle cx="140" cy="135" r="34" fill="none" stroke="#15803d" stroke-width="1.5" opacity=".4"/>
+	<circle cx="140" cy="135" r="16" fill="none" stroke="#15803d" stroke-width="1.5" opacity=".3"/>
+	<path d="M140 135 L140 83" stroke="#4ade80" stroke-width="2"/>
+	<path d="M140 135 L180 105" stroke="#4ade80" stroke-width="2" opacity=".6"/>
+	<circle cx="168" cy="112" r="4" fill="#4ade80"/>
+	<rect x="220" y="80" width="180" height="10" fill="#737373"/>
+	<rect x="220" y="100" width="140" height="10" fill="#737373" opacity=".7"/>
+	<rect x="220" y="126" width="180" height="10" fill="#737373"/>
+	<rect x="220" y="146" width="120" height="10" fill="#737373" opacity=".7"/>
+	<rect x="220" y="172" width="90" height="18" fill="#15803d"/>
+	<text x="440" y="240" text-anchor="end" font-family="ui-monospace,SFMono,Consolas,monospace" font-size="16" fill="#4ade80">job-radar</text>
+</svg>

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 270" role="img" aria-label="Treinos — app Android e Wear OS">
+	<rect width="480" height="270" fill="#0a0a0a"/>
+	<rect x="40" y="50" width="400" height="170" rx="6" fill="#1c1917" stroke="#15803d" stroke-width="2"/>
+	<rect x="90" y="80" width="90" height="110" rx="20" fill="none" stroke="#15803d" stroke-width="3"/>
+	<rect x="112" y="62" width="46" height="18" rx="6" fill="#15803d" opacity=".5"/>
+	<rect x="112" y="190" width="46" height="18" rx="6" fill="#15803d" opacity=".5"/>
+	<circle cx="135" cy="135" r="24" fill="none" stroke="#4ade80" stroke-width="2"/>
+	<path d="M135 135 L135 118" stroke="#4ade80" stroke-width="2"/>
+	<path d="M135 135 L148 141" stroke="#4ade80" stroke-width="2"/>
+	<rect x="248" y="129" width="152" height="12" rx="3" fill="#737373"/>
+	<rect x="240" y="109" width="16" height="52" rx="4" fill="#15803d"/>
+	<rect x="392" y="109" width="16" height="52" rx="4" fill="#15803d"/>
+	<text x="440" y="240" text-anchor="end" font-family="ui-monospace,SFMono,Consolas,monospace" font-size="16" fill="#4ade80">gym-program</text>
+</svg>

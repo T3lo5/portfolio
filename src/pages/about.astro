@@ -1,24 +1,30 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { skills, inlineSkills } from '../data/skills';
-import { site } from '../data/site';
+import { education } from '../data/education';
+import { certifications } from '../data/certifications';
+import { languages } from '../data/languages';
 ---
 
-<BaseLayout 
+<BaseLayout
 	title="Sobre mim — Anderson"
-	description="Conheça a trajetória e o foco profissional do Anderson como desenvolvedor full stack."
+	description="Trajetória, formação e stack do Anderson Franciscato, desenvolvedor frontend/fullstack."
 >
-	<section class="space-y-6">
+	<section class="space-y-8">
 		<div class="space-y-2 max-w-2xl">
 			<h1 class="text-3xl md:text-4xl">Sobre mim</h1>
 			<div class="sig" aria-hidden="true"></div>
 			<p class="text-muted">
-				Desenvolvedor full stack e estudante de Engenharia de Software, apaixonado por criar soluções web
+				Engenheiro de Software e desenvolvedor frontend/fullstack, apaixonado por criar soluções web
 				eficientes, escaláveis e com ótima experiência para o usuário.
 			</p>
 			<p class="text-muted">
 				Atuo desde o levantamento de requisitos até a entrega final, unindo interfaces modernas e lógicas de
 				negócio robustas. Maior atuação em frontend, com foco em performance, acessibilidade e design system.
+			</p>
+			<p class="text-muted">
+				Cursando o Master em Desenvolvimento e Gestão de Sistemas de IA na ESIC, com os estudos aplicados
+				publicados em <a href="/ia" class="text-accent underline">notas abertas de LLM</a>.
 			</p>
 		</div>
 
@@ -29,6 +35,30 @@ import { site } from '../data/site';
 					<span class="font-medium text-foreground">{group.category}:</span> {inlineSkills(group.items)}
 				</p>
 			))}
+		</div>
+
+		<div class="max-w-2xl space-y-4">
+			<h2 class="text-xl">Formação</h2>
+			{education.map((item) => (
+				<div class="space-y-0.5">
+					<p class="text-sm font-medium text-foreground">{item.degree}</p>
+					<p class="text-xs text-muted">{item.institution} · {item.period}</p>
+				</div>
+			))}
+		</div>
+
+		<div class="max-w-2xl space-y-4">
+			<h2 class="text-xl">Certificações</h2>
+			<ul class="space-y-1 text-sm text-muted">
+				{certifications.map((item) => <li>{item.name}</li>)}
+			</ul>
+		</div>
+
+		<div class="max-w-2xl space-y-4">
+			<h2 class="text-xl">Idiomas</h2>
+			<p class="text-sm text-muted">
+				{languages.map((lang) => `${lang.name} (${lang.level})`).join(' · ')}
+			</p>
 		</div>
 
 		<div class="pt-2">
