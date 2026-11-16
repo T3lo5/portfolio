@@ -12,6 +12,8 @@ export interface Project {
 	link?: string;
 	linkLabel?: string;
 	repo?: string;
+	/** Grupos curados usados pelos filtros da página /projects. */
+	tags?: string[];
 }
 
 export const projects: Project[] = [
@@ -30,6 +32,7 @@ export const projects: Project[] = [
 		stack: ['TypeScript', 'Node.js', 'Fastify', 'Prisma', 'PostgreSQL', 'Redis', 'BullMQ', 'React', 'Vite', 'Tailwind CSS', 'Docker'],
 		cover: '/images/projects/job-radar.svg',
 		repo: 'https://github.com/T3lo5/job-radar',
+		tags: ['web', 'ia'],
 	},
 	{
 		slug: 'rss-news-hub',
@@ -46,6 +49,7 @@ export const projects: Project[] = [
 		stack: ['TypeScript', 'Node.js', 'SQLite', 'Drizzle ORM', 'React', 'Vite', 'Docker', 'Telegram API'],
 		cover: '/images/projects/rss-news-hub.svg',
 		repo: 'https://github.com/T3lo5/rss-news-hub',
+		tags: ['web', 'ia'],
 	},
 	{
 		slug: 'gym-program',
@@ -62,6 +66,7 @@ export const projects: Project[] = [
 		stack: ['Kotlin', 'Jetpack Compose', 'Room', 'Wear OS', 'FastAPI', 'Python', 'Docker'],
 		cover: '/images/projects/gym-program.svg',
 		repo: 'https://github.com/T3lo5/gym-program',
+		tags: ['android', 'ia'],
 	},
 	{
 		slug: 'free-my-tablet',
@@ -80,6 +85,7 @@ export const projects: Project[] = [
 		link: 'https://github.com/T3lo5/free-my-tablet/releases',
 		linkLabel: 'Baixar o APK',
 		repo: 'https://github.com/T3lo5/free-my-tablet',
+		tags: ['android'],
 	},
 	{
 		slug: 'monkey-skills',
@@ -96,5 +102,6 @@ export const projects: Project[] = [
 		stack: ['Python', 'Claude Code Skills', 'JSON Schema'],
 		cover: '/images/projects/monkey-skills.svg',
 		repo: 'https://github.com/T3lo5/monkey-skills',
+		tags: ['agentes'],
 	},
 ];
