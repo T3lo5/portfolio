@@ -16,8 +16,7 @@ const { project } = Astro.props;
   <section class="space-y-6">
     <div class="space-y-3">
       <p class="text-xs font-medium uppercase tracking-widest text-accent">{project.role}</p>
-      <h1 class="text-3xl md:text-4xl">{project.title}</h1>
-      <div class="sig" aria-hidden="true"></div>
+      <h1 class="text-3xl md:text-4xl">{project.title}<span class="h1-cursor" aria-hidden="true"></span></h1>
       <p class="text-xs text-muted">{project.period}</p>
       <p class="text-muted">{project.summary}</p>
     </div>

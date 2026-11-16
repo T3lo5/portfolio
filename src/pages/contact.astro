@@ -17,8 +17,7 @@ const formEncoding = hasEndpoint ? 'application/x-www-form-urlencoded' : 'text/p
 >
 	<section class="grid gap-8 md:grid-cols-2 md:items-start">
 		<div class="space-y-4">
-			<h1 class="text-3xl md:text-4xl">Contato</h1>
-			<div class="sig" aria-hidden="true"></div>
+			<h1 class="text-3xl md:text-4xl">Contato<span class="h1-cursor" aria-hidden="true"></span></h1>
 			<p class="text-muted">
 				Se quiser conversar sobre projetos, parcerias ou oportunidades, me envie uma mensagem ou
 				usa um dos canais abaixo. Respondo o mais rápido possível.
@@ -67,7 +66,7 @@ const formEncoding = hasEndpoint ? 'application/x-www-form-urlencoded' : 'text/p
 				<label class="text-sm font-medium" for="message">Mensagem</label>
 				<textarea id="message" name="message" rows="5" required class="w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-accent"></textarea>
 			</div>
-			<button type="submit" class="rounded-md bg-accent px-4 py-2 text-sm font-medium text-background transition hover:opacity-90">
+			<button type="submit" id="submit-btn" class="inline-flex items-center gap-2 rounded-md bg-accent px-4 py-2 text-sm font-medium text-background transition hover:opacity-90">
 				Enviar
 			</button>
 			{!hasEndpoint && (
@@ -80,6 +79,17 @@ const formEncoding = hasEndpoint ? 'application/x-www-form-urlencoded' : 'text/p
 	<script>
 		const form = document.querySelector('form[aria-label="Formulário de contato"]');
 		const status = document.getElementById('form-status');
+		const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement | null;
+
+		// Check desenhado no lugar do rótulo — só depois de um envio real bem-sucedido.
+		const CHECK_SVG = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 8.5L6.5 12.5L13.5 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" pathLength="1" class="check-path"/></svg>`;
+
+		const showSent = () => {
+			if (!submitBtn) return;
+			submitBtn.disabled = true;
+			submitBtn.classList.add('is-sent');
+			submitBtn.innerHTML = `${CHECK_SVG} Enviado`;
+		};
 
 		if (form && status) {
 			const formspreeId = form.dataset.formspreeId;
@@ -103,9 +113,8 @@ const formEncoding = hasEndpoint ? 'application/x-www-form-urlencoded' : 'text/p
 							headers: { Accept: 'application/json' },
 						});
 						if (response.ok) {
+							showSent();
 							show('Obrigado! Sua mensagem foi enviada. Retornarei em breve.', true);
-							form.reset();
-							form.classList.add('hidden');
 						} else {
 							const data = await response.json().catch(() => ({}));
 							show(data.error || 'Erro ao enviar. Tente novamente.');
