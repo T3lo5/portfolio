@@ -28,9 +28,13 @@ const { title = 'Portfolio', description = 'Portfólio de projetos e experiênci
 		<meta property="og:description" content={description} />
 		<meta property="og:type" content="website" />
 		<meta property="og:url" content={Astro.url} />
-		<meta name="twitter:card" content="summary" />
+		<meta property="og:image" content={new URL('/og.png', Astro.url).href} />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:title" content={title} />
 		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={new URL('/og.png', Astro.url).href} />
 	<script is:inline>
 			(() => {
 				const root = document.documentElement;
@@ -71,15 +75,15 @@ const { title = 'Portfolio', description = 'Portfólio de projetos e experiênci
 		<a href="#main" class="sr-only focus:not-sr-only fixed top-2 left-2 z-[60] rounded-xs bg-accent px-3 py-1.5 text-xs font-medium text-background">Pular para o conteúdo principal</a>
 		<div id="scroll-progress" class="scroll-progress" aria-hidden="true"></div>
 		<header class="sticky top-0 z-50 border-b border-border bg-background">
-			<div class="mx-auto max-w-6xl px-4 py-3 flex items-end justify-between">
-				<a href="/" class="flex items-center gap-2 font-display text-lg">
+			<div class="mx-auto max-w-6xl px-4 py-3 grid grid-cols-[auto_1fr_auto] items-center gap-y-1 md:items-end">
+				<a href="/" class="col-start-1 row-start-1 flex items-center gap-2 font-display text-lg">
 					<span class="h-2 w-2 bg-accent" aria-hidden="true"></span>
 					Anderson
 				</a>
-				<TabBar current={Astro.url.pathname} class="flex-1" />
-				<div class="flex items-center gap-2">
+				<div class="col-start-3 row-start-1 flex items-center">
 					<ThemeToggle />
 				</div>
+				<TabBar current={Astro.url.pathname} class="col-span-3 row-start-2 md:col-span-1 md:col-start-2 md:row-start-1" />
 			</div>
 		</header>
 		<main id="main" class="mx-auto max-w-6xl px-4 py-8">
