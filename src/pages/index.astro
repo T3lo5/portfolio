@@ -1,29 +1,62 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectRow from '../components/ProjectRow.astro';
 import { site } from '../data/site';
+import { projects } from '../data/projects';
+import { experience } from '../data/experience';
+
+const featured = projects.slice(0, 3);
+// Primeiro ano de experiência profissional, derivado dos períodos em src/data/experience.ts.
+const startYear = Math.min(
+	...experience.flatMap((e) => (e.period.match(/20\d{2}/g) ?? []).map(Number)),
+);
 ---
 
-<BaseLayout 
+<BaseLayout
 	title={`${site.name} — ${site.role}`}
 	description={site.description}
 >
-	<section class="grid gap-8 md:grid-cols-1 md:items-center">
-		<div class="space-y-6 max-w-2xl">
-		<h1 class="text-4xl md:text-5xl">
-			Olá, eu sou o <span class="text-accent">{site.name.split(' ')[0]}</span>
-		</h1>
-		<div class="sig" aria-hidden="true"></div>
-			<p class="text-lg text-muted md:text-xl">
-				{site.description}
-			</p>
-			<div class="flex flex-wrap gap-3">
-			<a href="/projects" class="rounded-md bg-accent px-5 py-2.5 text-sm font-medium text-background transition hover:opacity-90">
-				Ver projetos
-			</a>
-			<a href="/contact" class="rounded-md border border-border px-5 py-2.5 text-sm font-medium transition hover:bg-surface">
-				Contato
-			</a>
+	<section class="grid gap-14 md:gap-20">
+		<div class="flex min-h-[calc(100svh-10rem)] flex-col justify-center space-y-6 pt-4 md:pt-0">
+			<div class="max-w-2xl space-y-6">
+				<h1 data-enter style="--i: 0">
+					Olá, eu sou o <span class="text-accent">{site.name.split(' ')[0]}</span><span class="h1-cursor" aria-hidden="true"></span>
+				</h1>
+				<p data-enter style="--i: 1" class="text-lg text-muted md:text-xl">
+					{site.description}
+				</p>
+				<p data-enter style="--i: 2" class="text-sm text-muted">
+					<strong class="font-medium text-foreground">{projects.length} projetos</strong> documentados com problema, stack e resultado ·
+					<strong class="font-medium text-foreground">desde {startYear}</strong> em produção
+				</p>
+				<div data-enter style="--i: 3" class="flex flex-wrap gap-3">
+					<a href="/projects" class="rounded-md bg-accent px-5 py-2.5 text-sm font-medium text-background transition hover:opacity-90">
+						Ver projetos
+					</a>
+					<a href="/contact" class="rounded-md border border-border px-5 py-2.5 text-sm font-medium transition hover:bg-surface">
+						Contato
+					</a>
+				</div>
 			</div>
 		</div>
+
+		<div class="space-y-4">
+			<div class="space-y-2">
+				<h2 class="text-2xl">Projetos em destaque</h2>
+				<p class="text-muted">Os três mais recentes, cada um com o problema que resolveu.</p>
+			</div>
+			<div class="divide-y divide-border">
+				{featured.map((project, i) => (
+					<ProjectRow project={project} loading={i === 0 ? 'eager' : 'lazy'} />
+				))}
+			</div>
+			<a href="/projects" class="inline-flex items-center gap-1 text-sm font-medium text-accent transition hover:opacity-80">
+				Todos os projetos <span aria-hidden="true">→</span>
+			</a>
+		</div>
+
+		<p class="max-w-2xl text-lg">
+			Tem um projeto em mente? <a href="/contact" class="text-accent underline underline-offset-4 transition hover:opacity-80">Me envie uma mensagem</a>.
+		</p>
 	</section>
 </BaseLayout>

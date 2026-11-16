@@ -1,0 +1,31 @@
+---
+interface Props {
+	project: import('../data/projects').Project;
+	loading?: 'lazy' | 'eager';
+}
+
+const { project, loading = 'lazy' } = Astro.props;
+---
+
+<a
+	href={`/project/${project.slug}`}
+	class="group grid gap-4 py-5 md:grid-cols-[160px_1fr] md:items-center"
+>
+	<div class="aspect-video w-full overflow-hidden rounded-md border border-transparent bg-foreground/5 transition group-hover:border-accent md:aspect-auto md:h-32">
+		<img
+			src={project.cover}
+			alt={project.title}
+			loading={loading}
+			decoding="async"
+			class="h-full w-full object-cover transition duration-300 group-hover:scale-[1.03]"
+		/>
+	</div>
+	<div class="flex items-center justify-between gap-2">
+		<div class="space-y-0.5">
+			<h2 class="font-display text-xl text-foreground transition group-hover:text-accent">{project.title}</h2>
+			<p class="text-sm text-muted">{project.summary}</p>
+			<p class="text-xs text-muted">{project.stack.join(' · ')}</p>
+		</div>
+		<span aria-hidden="true" class="translate-x-0 text-muted transition group-hover:translate-x-1 group-hover:text-accent">→</span>
+	</div>
+</a>
